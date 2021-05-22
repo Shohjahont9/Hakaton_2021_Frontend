@@ -86,7 +86,7 @@ const Dashboard = ({ history }) => {
             backgroundSize: "cover",
           }}
         >
-          <CardInfo>Станки</CardInfo>
+          <CardInfo>Oборудования</CardInfo>
         </CardDiv>
         <CardDiv
           onClick={() => history.push("/app/repair")}

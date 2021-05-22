@@ -1,9 +1,12 @@
 import ReactECharts from "echarts-for-react";
 import _ from "lodash";
 const CustomLineChart = ({ data }) => {
+  console.log(data);
   let filteredFirstData = data.filter((d) => d.type === "SAW1");
   let filteredSecondData = data.filter((d) => d.type === "SAW2");
   let filteredThirdData = data.filter((d) => d.type === "SAW3");
+
+  console.log(filteredFirstData);
 
   const option = {
     animationDuration: 10000,

@@ -91,20 +91,20 @@ const Sidebar = ({ collapsed, changeWidth, history }) => {
                 Главная
               </MenuItem>
             </Tooltip>
-            <Tooltip title="Станки" placement="right">
+            <Tooltip title="Oборудования" placement="right">
               <MenuItem
                 icon={<img src={machines} alt="" style={{ width: 30 }} />}
               >
                 <Link to="/app/machines" />
-                Станки
+                Oборудования
               </MenuItem>
             </Tooltip>
             <>
-              <Tooltip title="Близки к исправлению" placement="right">
+              <Tooltip title="Неисправные" placement="right">
                 <MenuItem
                   icon={<img src={repair} alt="" style={{ width: 30 }} />}
                 >
-                  Близки к исправлению
+                  Неисправные
                   <Link to="/app/repair" />
                 </MenuItem>
               </Tooltip>

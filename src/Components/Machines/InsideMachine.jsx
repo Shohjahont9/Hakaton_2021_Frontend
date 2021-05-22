@@ -36,7 +36,7 @@ const InsideMachine = ({ sawId }) => {
       setData(data.data);
     }
     fetchData();
-  }, );
+  }, [] );
 
   return (
     <ComponentDiv>
