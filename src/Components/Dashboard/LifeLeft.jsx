@@ -37,7 +37,7 @@ const LifeLeft = () => {
   return (
     <ComponentDiv>
       <h2 style={{ position: "sticky" }}>
-        Approximate Life Left of Components
+        Состояние
       </h2>
       <Cover>
         {data?.map((d) => (

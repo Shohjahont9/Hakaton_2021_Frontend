@@ -36,7 +36,7 @@ const InsideMachine = ({ sawId }) => {
       setData(data.data);
     }
     fetchData();
-  }, []);
+  }, );
 
   return (
     <ComponentDiv>
@@ -109,7 +109,7 @@ const InsideMachine = ({ sawId }) => {
                 />
                 <p style={{ fontSize: 10, margin: "-6px 3px", float: "right" }}>
                   <strong>
-                    {d.remained_details}/{d.initial_details} КПД =
+                    {d.remained_details}/{d.initial_details} исп =
                     {Math.floor(
                       ((d.initial_details - d.remained_details) * 100) /
                         d.initial_details

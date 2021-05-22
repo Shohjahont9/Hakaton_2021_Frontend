@@ -96,7 +96,7 @@ const Dashboard = ({ history }) => {
             backgroundSize: "cover",
           }}
         >
-          <CardInfo>Не исправные</CardInfo>
+          <CardInfo>Неисправные</CardInfo>
         </CardDiv>
         <CardDiv
           onClick={() => history.push("/app/shop")}
@@ -123,7 +123,7 @@ const Dashboard = ({ history }) => {
               backgroundSize: "cover",
             }}
           >
-            нагрузка системы
+            Под Нагрузкой
           </div>
         </NewsDiv>
         <NewsDiv>
