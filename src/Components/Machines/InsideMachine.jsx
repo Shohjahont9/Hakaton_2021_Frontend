@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Progress } from "antd";
+import { Progress, DatePicker } from "antd";
 import analyticsApi from "./../../services/analiticsService";
 
 const ComponentDiv = styled.div`
@@ -8,11 +8,13 @@ const ComponentDiv = styled.div`
   width: 100%;
   text-align: center;
   overflow-y: auto;
+  position: sticky;
 `;
 const Cover = styled.div`
   height: 100%;
   width: 100%;
   text-align: center;
+  /* margin-top: 60px; */
 `;
 
 const ComponentDetails = styled.div`
@@ -22,58 +24,103 @@ const ComponentDetails = styled.div`
   margin-top: 20px;
   border-radius: 5px;
   box-shadow: 0 0 3px;
-  padding: 5px;
+  padding: 3px;
 `;
 
-const InsideMachine = () => {
+const InsideMachine = ({ sawId }) => {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await analyticsApi.getMachineDetails("SAW" + sawId);
+      setData(data.data);
+    }
+    fetchData();
+  }, []);
+
   return (
     <ComponentDiv>
-      <h2 style={{ position: "sticky" }}>Detailed overview</h2>
+      <div
+        style={{
+          height: "50px",
+          width: "100%",
+          position: "sticky",
+          boxShadow: "0px  2px 5px",
+          backgroundColor: "white",
+          zIndex: 9000,
+          borderRadius: 5,
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <h2 style={{ marginTop: 7 }}>Детали</h2>
+        <DatePicker
+          size="small"
+          style={{ height: 30, marginTop: 10 }}
+          disabled
+        />
+      </div>
       <Cover>
-        <ComponentDetails>
-          <div>
-            <div style={{ float: "left", marginBottom: 10, marginLeft: 10 }}>
-              <h6 style={{ margin: 0, fontSize: 15 }}>
-                <strong>d.type</strong>
-              </h6>
-              <div style={{ display: "flex" }}>
-                <p style={{ float: "right", fontSize: 10 }}>
-                  165 / 5465 (hours)
+        {data?.map((d) => (
+          <ComponentDetails>
+            <div>
+              <div style={{ float: "left", marginBottom: 0, marginLeft: 10 }}>
+                <h6 style={{ margin: 0, fontSize: 15 }}>
+                  <strong>{d.type}</strong>
+                </h6>
+                <div style={{ display: "flex" }}>
+                  <p style={{ float: "right", fontSize: 10 }}>
+                    {d.remained_hours} / {d.life_time} (hours)
+                  </p>
+                </div>
+              </div>
+              <div
+                style={{
+                  float: "right",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <strong>
+                  <p style={{ marginTop: 8, marginRight: 5, fontSize: 10 }}>
+                    {d.articul}
+                  </p>
+                </strong>
+                <Progress
+                  type="circle"
+                  percent={Math.floor(
+                    ((d.life_time - d.remained_hours) * 100) / d.life_time
+                  )}
+                  width={38}
+                  style={{ float: "right", marginRight: 2 }}
+                />
+              </div>
+              <div>
+                <Progress
+                  size="small"
+                  percent={Math.floor(
+                    ((d.initial_details - d.remained_details) * 100) /
+                      d.initial_details
+                  )}
+                  strokeWidth={4}
+                  showInfo={false}
+                  strokeColor="red"
+                  style={{ margin: 0 }}
+                />
+                <p style={{ fontSize: 10, margin: "-6px 3px", float: "right" }}>
+                  <strong>
+                    {d.remained_details}/{d.initial_details} КПД =
+                    {Math.floor(
+                      ((d.initial_details - d.remained_details) * 100) /
+                        d.initial_details
+                    )}
+                    %
+                  </strong>
                 </p>
               </div>
             </div>
-            <div
-              style={{
-                float: "right",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <strong>
-                <p style={{ marginTop: 8, marginRight: 20 }}>d.articul</p>
-              </strong>
-              <Progress
-                type="circle"
-                percent={10}
-                // {Math.floor(
-                //   ((d.life_time - d.remained) * 100) / d.life_time
-                // )}
-                width={38}
-                style={{ float: "right", marginRight: 2 }}
-              />
-            </div>
-            <Progress
-              size="small"
-              percent={10}
-              // {Math.floor(
-              //   ((d.life_time - d.remained) * 100) / d.life_time
-              // )}
-              strokeWidth={2}
-              showInfo={false}
-              style={{ marginBottom: 12 }}
-            />
-          </div>
-        </ComponentDetails>
+          </ComponentDetails>
+        ))}
       </Cover>
     </ComponentDiv>
   );

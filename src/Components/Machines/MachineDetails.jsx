@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import machine from "../../images/MachineDetail.jpg";
 import InsideMachine from "./InsideMachine";
+import CustomBarChart from "./atoms/BarChart";
+import CustomLineChart from "./atoms/LineChart";
+import CustomPieChart from "./atoms/PieChart";
+import chartService from "../../services/chartService";
 
 const PageDiv = styled.div`
   height: 100%;
@@ -10,14 +14,14 @@ const PageDiv = styled.div`
 
 const TopDiv = styled.div`
   display: flex;
-  height: 45%;
+  height: 47vh;
   width: 100%;
 `;
 
 const BottomDiv = styled.div`
   display: flex;
   width: 100%;
-  height: 55%;
+  height: 60vh;
 `;
 
 const DescriptionDiv = styled.div`
@@ -26,11 +30,11 @@ const DescriptionDiv = styled.div`
 `;
 
 const Description = styled.div`
-  border-radius: 5px;
-  margin: 20px;
+  border-radius: 15px;
+  margin: 10px;
   min-height: 200px;
   min-width: 200px;
-  height: 90%;
+  height: 80%;
   box-shadow: 0 0 5px;
   position: relative;
 `;
@@ -65,7 +69,54 @@ const Info = styled.div`
   overflow-y: auto;
 `;
 
-const MachineDetails = (props) => {
+const MachineDetails = ({ match }) => {
+  const [lineChartData, setLineChartData] = useState([]);
+  const [barChartData, setBarChartData] = useState([]);
+  const [pieChartData, setPieChartData] = useState([]);
+
+  useEffect(() => {
+    getChartsData();
+    setTimeout(() => {
+      let newBarChartData = [
+        {
+          name: "data1",
+          type: "bar",
+
+          data: [10, 52, 200, 334, 390, 330, 220],
+          emphasis: {
+            focus: "series",
+          },
+        },
+        {
+          name: "data2",
+          type: "bar",
+
+          data: [0, 40, 150, 334, 390, 330, 220],
+          emphasis: {
+            focus: "series",
+          },
+        },
+      ];
+
+      let newPieChartData = [
+        { value: 1048, name: "data1" },
+        { value: 735, name: "data2" },
+        { value: 580, name: "data3" },
+        { value: 484, name: "data4" },
+        { value: 300, name: "data5" },
+      ];
+
+      setBarChartData(newBarChartData);
+      setPieChartData(newPieChartData);
+    }, 1000);
+  }, []);
+
+  const getChartsData = async () => {
+    let { data } = await chartService.getChartData();
+    if (data.status === 200) {
+      setLineChartData(data.data);
+    }
+  };
   return (
     <PageDiv>
       <TopDiv>
@@ -86,20 +137,26 @@ const MachineDetails = (props) => {
           </Description>
         </DescriptionDiv>
         <InsideDiv>
-          <Description></Description>
+          <Description>
+            <CustomLineChart data={lineChartData} />
+          </Description>
         </InsideDiv>
       </TopDiv>
       <BottomDiv>
         <GraphMini>
           <Description>
-            <InsideMachine />
+            <InsideMachine sawId={match.params.id} />
           </Description>
         </GraphMini>
         <GraphMax>
-          <Description></Description>
+          <Description>
+            <CustomBarChart data={barChartData} />
+          </Description>
         </GraphMax>
         <GraphMini>
-          <Description></Description>
+          <Description>
+            <CustomPieChart data={pieChartData} />
+          </Description>
         </GraphMini>
       </BottomDiv>
     </PageDiv>

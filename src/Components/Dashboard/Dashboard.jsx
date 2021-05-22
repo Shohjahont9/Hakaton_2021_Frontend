@@ -3,6 +3,7 @@ import styled from "styled-components";
 import machine from "../../images/machineMain.jpg";
 import repair from "../../images/repairMain.jpg";
 import shop from "../../images/shopMain.jpg";
+import img from "../../images/vector.jpg";
 import LifeLeft from "./LifeLeft";
 
 const PageDiv = styled.div`
@@ -95,7 +96,7 @@ const Dashboard = ({ history }) => {
             backgroundSize: "cover",
           }}
         >
-          <CardInfo>Близки к исправлению</CardInfo>
+          <CardInfo>Не исправные</CardInfo>
         </CardDiv>
         <CardDiv
           onClick={() => history.push("/app/shop")}
@@ -112,8 +113,32 @@ const Dashboard = ({ history }) => {
         <NewsDiv>
           <LifeLeft />
         </NewsDiv>
-        <NewsDiv></NewsDiv>
-        <NewsDiv></NewsDiv>
+        <NewsDiv>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(${img})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
+          >
+            нагрузка системы
+          </div>
+        </NewsDiv>
+        <NewsDiv>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(${img})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
+          >
+            мини окно для оповещений
+          </div>
+        </NewsDiv>
       </NewsContainer>
     </PageDiv>
   );
