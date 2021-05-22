@@ -10,6 +10,7 @@ import logo from "../images/logoMini.png";
 import machines from "../images/machines.png";
 import repair from "../images/repair.png";
 import shop from "../images/shop.png";
+import homepage from "../images/homepage.png";
 
 import {
   ProSidebar,
@@ -82,6 +83,14 @@ const Sidebar = ({ collapsed, changeWidth, history }) => {
         </SidebarHeader>
         <SidebarContent>
           <Menu iconShape="square" popperArrow>
+            <Tooltip title="Главная" placement="right">
+              <MenuItem
+                icon={<img src={homepage} alt="" style={{ width: 30 }} />}
+              >
+                <Link to="/app/dashboard" />
+                Главная
+              </MenuItem>
+            </Tooltip>
             <Tooltip title="Станки" placement="right">
               <MenuItem
                 icon={<img src={machines} alt="" style={{ width: 30 }} />}
@@ -96,7 +105,7 @@ const Sidebar = ({ collapsed, changeWidth, history }) => {
                   icon={<img src={repair} alt="" style={{ width: 30 }} />}
                 >
                   Близки к исправлению
-                  <Link to="/app/users" />
+                  <Link to="/app/repair" />
                 </MenuItem>
               </Tooltip>
               <Tooltip title="Магазин" placement="right">
@@ -104,7 +113,7 @@ const Sidebar = ({ collapsed, changeWidth, history }) => {
                   icon={<img src={shop} alt="" style={{ width: 30 }} />}
                 >
                   Магазин
-                  <Link to="/app/fuqarolar" />
+                  <Link to="/app/shop" />
                 </MenuItem>
               </Tooltip>
             </>

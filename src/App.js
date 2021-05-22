@@ -8,7 +8,7 @@ import Login from "./Components/Login/Login";
 
 function App() {
   return (
-    <div style={{ height: "100vh", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100%", overflowY: "hidden" }}>
       <ToastContainer />
       <Switch>
         <Route path="/login" component={Login} />
